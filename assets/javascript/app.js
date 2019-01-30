@@ -17,8 +17,7 @@ $("#submit").on("click", function (event) {
 	event.preventDefault();
 
 
-	// most recent user.
-	// Dont forget to provide initial data to your Firebase database.
+	
 	var trainName = $("#train-name-input").val().trim();
 	var destination = $("#destination-input").val().trim();
 	var firstTrainTime = $("#train-time-input").val().trim();
@@ -39,7 +38,7 @@ $("#submit").on("click", function (event) {
 	});
 });
 
-// Firebase watcher + initial loader HINT: .on("value")
+// Firebase watcher + initial loader 
 dataRef.ref().on("child_added", function (snapshot) {
 	// Log everything that's coming out of snapshot
 	// console.log(snapshot.val());
@@ -68,6 +67,21 @@ dataRef.ref().on("child_added", function (snapshot) {
 	console.log(minutesAway);
 	console.log(nextArrival);
 
+	// moment.js
+
+	var trainConverted = moment.unix(time).format("hh:mm");
+	//calculate difference between times
+	var difference = moment().diff(moment(trainConverted), "minutes");
+
+	//time apart(remainder)
+	var trainRemain = difference % frequency;
+
+	//minutes until arrival
+	var minUntil = frequency - trainRemain;
+
+	//next arrival time
+	var nextArrival = moment().add(minUntil, "minutes").format('hh:mm');
+
 	var tableRow = $("<tr>");
 
 	// Creating a paragraph tag with the result item's rating
@@ -91,21 +105,7 @@ dataRef.ref().on("child_added", function (snapshot) {
 	tableRow.append(td);
 	$("#table-row").append(tableRow);
 
-	// moment.js
-
-	var trainConverted = moment.unix(time).format("hh:mm");
-	//calculate difference between times
-	var difference = moment().diff(moment(trainConverted), "minutes");
-
-	//time apart(remainder)
-	var trainRemain = difference % frequency;
-
-	//minutes until arrival
-	var minUntil = frequency - trainRemain;
-
-	//next arrival time
-	var nextArrival = moment().add(minUntil, "minutes").format('hh:mm');
-
 }, function (errorObject) {
 	console.log("Errors handled: " + errorObject.code);
 });
+
