@@ -6,4 +6,4 @@ https://sheimagh.github.io/Train-Scheduler/
 
 
 
-[<img src="assets/images/Trainscreenshot.PNG">](https://sheimagh.github.io/Train-Scheduler/)
+[<img src="assets/images/trainscreenshot2.PNG">](https://sheimagh.github.io/Train-Scheduler/)
